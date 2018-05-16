@@ -39,7 +39,7 @@ app.use(
 // Sets up Express middleware
 app.use(
   "/graphql",
-  cors(),
+  cors('*'),
   bodyParser.json(),
   graphqlExpress({ schema, context: { Recipe } })
 );
@@ -55,5 +55,5 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 4444;
 
 app.listen(PORT, () => {
-  console.log('Server listening');
+  console.log(`Server listening at ${PORT}`);
 });
