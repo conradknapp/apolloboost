@@ -1,21 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-
-// Import gql and Query
-import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 
-// Create query
-const GET_RECIPES = gql`
-  query {
-    getAllRecipes {
-      _id
-      name
-      description
-      category
-    }
-  }
-`;
+import { GET_RECIPES } from '../queries';
 
 class App extends Component {
   render() {

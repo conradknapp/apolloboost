@@ -1,19 +1,7 @@
 import React, { Component } from 'react';
-
-// Import gql and Query
-import { gql } from 'apollo-boost';
 import { Mutation } from 'react-apollo';
 
-// Make createUser mutation with gql
-const CREATE_USER = gql`
-  mutation($username: String!, $email: String!, $password: String!) {
-    createUser(username: $username, email: $email, password: $password) {
-      username
-      email
-      password
-    }
-  }
-`;
+import { CREATE_USER } from '../queries';
 
 class Signup extends Component {
   state = {
@@ -24,8 +12,9 @@ class Signup extends Component {
   }
 
   handleChange = evt => {
-    const { name, value } = evt.target;
-    this.setState({ [name]: value });
+    this.setState({
+      [evt.target.name]: evt.target.value
+    });
   }
 
   handleSubmit = (event, createUser) => {
@@ -40,21 +29,44 @@ class Signup extends Component {
     const isInvalid = !username || !email || !password || password !== passwordConfirmation;
 
     return (
+      <React.Fragment>
+      <h2 className="App">Sign Up</h2>
       <Mutation
         mutation={CREATE_USER}
         variables={{ username, email, password }}
       >
         {(createUser, { data, loading, error }) => (
-          <form onSubmit={event => this.handleSubmit(event, createUser)}>
-            <input name="username" onChange={this.handleChange} value={username} type="text" placeholder="Full Name" />
-            <input name="email" onChange={this.handleChange} value={email} type="text" placeholder="Email Address" />
-            <input name="password" onChange={this.handleChange} value={password} type="password" placeholder="Password" />
-            <input name="passwordConfirmation" value={passwordConfirmation} onChange={this.handleChange} type="password" placeholder="Confirm Password" />
+          <form className="App" onSubmit={event => this.handleSubmit(event, createUser)}>
+            <input
+              name="username"
+              onChange={this.handleChange}
+              value={username}
+              type="text"
+              placeholder="Full Name" />
+            <input
+              name="email"
+              onChange={this.handleChange}
+              value={email} type="text"
+              placeholder="Email Address" />
+            <input
+              name="password"
+              onChange={this.handleChange}
+              value={password} type="password"
+              placeholder="Password"
+            />
+            <input
+              name="passwordConfirmation"
+              value={passwordConfirmation}
+              onChange={this.handleChange}
+              type="password"
+              placeholder="Confirm Password"
+            />
             <button disabled={loading || isInvalid} type="submit">Sign Up</button>
             {error}
           </form>
         )}
       </Mutation>
+      </React.Fragment>
     );
   }
 };
