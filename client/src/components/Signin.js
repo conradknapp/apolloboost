@@ -3,16 +3,14 @@ import { Mutation } from 'react-apollo';
 import { withRouter } from "react-router-dom";
 
 import Error from './Error';
-import { CREATE_USER } from '../queries';
+import { SIGNIN_USER } from '../queries';
 
 const initialState = {
   username: '',
-  email: '',
-  password: '',
-  passwordConfirmation: ''
+  password: ''
 };
 
-class Signup extends Component {
+class Signin extends Component {
   state = { ...initialState };
 
   handleChange = evt => {
@@ -21,11 +19,11 @@ class Signup extends Component {
     });
   }
 
-  handleSubmit = (event, createUser) => {
+  handleSubmit = (event, signinUser) => {
     event.preventDefault();
-    createUser().then(async ({ data }) => {
+    signinUser().then(async ({ data }) => {
       console.log(data);
-      localStorage.setItem('token', data.createUser.token);
+      localStorage.setItem('token', data.signinUser.token);
       this.clearState();
       this.props.history.push('/');
     });
@@ -36,23 +34,23 @@ class Signup extends Component {
   }
 
   checkIfValid = () => {
-    const { username, email, password, passwordConfirmation } = this.state;
-    const isInvalid = !username || !email || !password || password !== passwordConfirmation;
+    const { username, password } = this.state;
+    const isInvalid = !username || !password;
     return isInvalid;
   }
 
   render() {
-    const { username, email, password, passwordConfirmation } = this.state;
+    const { username, password } = this.state;
 
     return (
       <React.Fragment>
-      <h2 className="App">Sign Up</h2>
+      <h2 className="App">Sign in</h2>
       <Mutation
-        mutation={CREATE_USER}
-        variables={{ username, email, password }}
+        mutation={SIGNIN_USER}
+        variables={{ username, password }}
       >
-        {(createUser, { data, loading, error }) => (
-          <form className="App" onSubmit={event => this.handleSubmit(event, createUser)}>
+        {(signinUser, { data, loading, error }) => (
+          <form className="App" onSubmit={event => this.handleSubmit(event, signinUser)}>
             <input
               name="username"
               onChange={this.handleChange}
@@ -60,22 +58,10 @@ class Signup extends Component {
               type="text"
               placeholder="Username" />
             <input
-              name="email"
-              onChange={this.handleChange}
-              value={email} type="text"
-              placeholder="Email Address" />
-            <input
               name="password"
               onChange={this.handleChange}
               value={password} type="password"
               placeholder="Password"
-            />
-            <input
-              name="passwordConfirmation"
-              value={passwordConfirmation}
-              onChange={this.handleChange}
-              type="password"
-              placeholder="Confirm Password"
             />
             <button disabled={loading || this.checkIfValid()} type="submit">Sign Up</button>
             {error && <Error error={error} />}
@@ -85,6 +71,6 @@ class Signup extends Component {
       </React.Fragment>
     );
   }
-};
+}
 
-export default withRouter(Signup);
+export default withRouter(Signin);

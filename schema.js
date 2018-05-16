@@ -21,6 +21,7 @@ exports.typeDefs = `
   }
 
   type Mutation {
+    signinUser(username: String!, password: String!): Token!
     createUser(username: String!, password: String!, email: String!): Token!
   }
 `;

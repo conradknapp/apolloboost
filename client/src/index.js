@@ -6,6 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 // Import components
 import App from './components/App';
+import Signin from './components/Signin';
 import Signup from './components/Signup';
 
 // import Apollo packages
@@ -19,7 +20,8 @@ const Root = () => (
   <Router>
     <Switch>
       <Route path="/" exact component={App} />
-      <Route path="/signup" component={Signup} />
+      <Route path="/signin" exact component={Signin} />
+      <Route path="/signup" exact component={Signup} />
     </Switch>
   </Router>
 );
