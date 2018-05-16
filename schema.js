@@ -12,11 +12,15 @@ exports.typeDefs = `
     email: String!
   }
 
+  type Token {
+    token: String!
+  }
+
   type Query {
     getAllRecipes: [Recipe]
   }
 
   type Mutation {
-    createUser(username: String!, password: String!, email: String!): User
+    createUser(username: String!, password: String!, email: String!): Token!
   }
 `;

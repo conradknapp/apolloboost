@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
+import { withRouter } from "react-router-dom";
 
 import { CREATE_USER } from '../queries';
 
+const initialState = {
+  username: '',
+  email: '',
+  password: '',
+  passwordConfirmation: ''
+};
+
 class Signup extends Component {
-  state = {
-    username: '',
-    email: '',
-    password: '',
-    passwordConfirmation: ''
-  }
+  state = { ...initialState };
 
   handleChange = evt => {
     this.setState({
@@ -21,12 +24,24 @@ class Signup extends Component {
     event.preventDefault();
     createUser().then(async ({ data }) => {
       console.log(data);
+      localStorage.setItem('token', data.createUser.token);
+      this.clearState();
+      this.props.history.push('/');
     });
   };
 
-  render() {
+  clearState = () => {
+    this.setState({ ...initialState });
+  }
+
+  checkIfValid = () => {
     const { username, email, password, passwordConfirmation } = this.state;
     const isInvalid = !username || !email || !password || password !== passwordConfirmation;
+    return isInvalid;
+  }
+
+  render() {
+    const { username, email, password, passwordConfirmation } = this.state;
 
     return (
       <React.Fragment>
@@ -61,8 +76,8 @@ class Signup extends Component {
               type="password"
               placeholder="Confirm Password"
             />
-            <button disabled={loading || isInvalid} type="submit">Sign Up</button>
-            {error}
+            <button disabled={loading || this.checkIfValid()} type="submit">Sign Up</button>
+            {error && <h3>Error: {error.graphQLErrors[0].message}</h3>}
           </form>
         )}
       </Mutation>
@@ -71,4 +86,4 @@ class Signup extends Component {
   }
 };
 
-export default Signup;
+export default withRouter(Signup);
