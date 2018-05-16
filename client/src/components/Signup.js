@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import { withRouter } from "react-router-dom";
 
+import Error from './Error';
 import { CREATE_USER } from '../queries';
 
 const initialState = {
@@ -77,7 +78,7 @@ class Signup extends Component {
               placeholder="Confirm Password"
             />
             <button disabled={loading || this.checkIfValid()} type="submit">Sign Up</button>
-            {error && <h3>Error: {error.graphQLErrors[0].message}</h3>}
+            {error && <Error error={error} />}
           </form>
         )}
       </Mutation>
