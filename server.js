@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const Recipe = require('./models/Recipe');
+const User = require('./models/User');
 require('dotenv').config({ path: 'variables.env' });
 
 // GraphQL-Express Packages
@@ -41,7 +42,7 @@ app.use(
   "/graphql",
   cors('*'),
   bodyParser.json(),
-  graphqlExpress({ schema, context: { Recipe } })
+  graphqlExpress({ schema, context: { Recipe, User } })
 );
 
 if (process.env.NODE_ENV === 'production') {

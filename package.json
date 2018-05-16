@@ -6,7 +6,7 @@
   "scripts": {
     "server": "nodemon server.js",
     "client": "cd client && yarn start",
-    "dev": "concurrently \"yarn run server\" \"yarn run client\""
+    "dev": "concurrently --names \"server,client\" \"npm run server --silent\" \"npm run client --silent\""
   },
   "dependencies": {
     "apollo-server-express": "^1.3.6",

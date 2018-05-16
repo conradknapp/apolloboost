@@ -6,7 +6,17 @@ exports.typeDefs = `
     category: String
   }
 
+  type User {
+    username: String!
+    password: String!
+    email: String!
+  }
+
   type Query {
     getAllRecipes: [Recipe]
+  }
+
+  type Mutation {
+    createUser(username: String!, password: String!, email: String!): User
   }
 `;
