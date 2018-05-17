@@ -4,9 +4,22 @@ import { gql } from 'apollo-boost';
 export const GET_RECIPES = gql`
   query {
     getAllRecipes {
-      _id
       name
       description
+      category
+      instructions
+      createdDate
+    }
+  }
+`;
+
+export const CREATE_RECIPE = gql`
+  mutation($name: String, $description: String, $instructions: String, $category: String) {
+    createRecipe(name: $name, description: $description, instructions: $instructions, category: $category) {
+      name
+      description
+      instructions
+      createdDate
       category
     }
   }

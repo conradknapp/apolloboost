@@ -11,12 +11,25 @@ const createToken = async (user, secret, expiresIn) => {
 
 exports.resolvers = {
   Query: {
+    getLatestRecipes: async (root) => {
+      const latestRecipes = await Recipe.find().sort({ createdDate: 'desc' }).limit(2);
+      return latestRecipes;
+    },
     getAllRecipes: async (root) => {
-      const allRecipes = await Recipe.find({});
+      const allRecipes = await Recipe.find();
       return allRecipes;
     }
   },
   Mutation: {
+    createRecipe: async (root, { name, description, instructions, category }) => {
+      const newRecipe = new Recipe({
+        name,
+        description,
+        category,
+        instructions
+      }).save();
+      return newRecipe;
+    },
     signinUser: async (root, { username, password }) => {
       const user = await User.findOne({ username });
       if (!user) {

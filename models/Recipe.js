@@ -2,9 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const RecipeSchema = new Schema({
-  _id: {
-    type: Schema.Types.ObjectId
-  },
   name: {
     type: String,
     required: true
@@ -13,8 +10,15 @@ const RecipeSchema = new Schema({
     type: String,
     required: true
   },
+  instructions: {
+    type: String
+  },
   category: {
     type: String
+  },
+  createdDate: {
+    type: Date,
+    default: Date.now
   }
 });
 
