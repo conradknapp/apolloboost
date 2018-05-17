@@ -8,6 +8,7 @@ import registerServiceWorker from './registerServiceWorker';
 import App from './components/App';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
+import Recipes from './components/Recipes';
 import CreateRecipe from './components/CreateRecipe';
 
 // import Apollo packages
@@ -22,6 +23,7 @@ const Root = () => (
     <Switch>
       <Route path="/" exact component={App} />
       <Route path="/recipe" exact component={CreateRecipe} />
+      <Route path="/recipes" exact component={Recipes} />
       <Route path="/signin" exact component={Signin} />
       <Route path="/signup" exact component={Signup} />
     </Switch>

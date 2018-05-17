@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import { Query } from 'react-apollo';
 
-import { LATEST_RECIPES } from '../queries';
+import { GET_RECIPES } from '../queries';
 
-class App extends Component {
+class Recipes extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Latest Recipes</h1>
-        <Query query={LATEST_RECIPES}>
+        <h1>All Recipes</h1>
+        <Query query={GET_RECIPES}>
           {({ loading, error, data }) => {
             if (loading) return <div>Loading...</div>;
             if (error) return <div>Error :(</div>;
@@ -22,4 +22,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Recipes;

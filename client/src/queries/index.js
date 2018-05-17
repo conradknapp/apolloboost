@@ -13,6 +13,18 @@ export const GET_RECIPES = gql`
   }
 `;
 
+export const LATEST_RECIPES = gql`
+  query {
+    getLatestRecipes {
+      name
+      description
+      category
+      instructions
+      createdDate
+    }
+  }
+`;
+
 export const CREATE_RECIPE = gql`
   mutation($name: String, $description: String, $instructions: String, $category: String) {
     createRecipe(name: $name, description: $description, instructions: $instructions, category: $category) {
