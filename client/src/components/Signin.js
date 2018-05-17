@@ -33,7 +33,7 @@ class Signin extends Component {
     this.setState({ ...initialState });
   }
 
-  checkIfValid = () => {
+  validateForm = () => {
     const { username, password } = this.state;
     const isInvalid = !username || !password;
     return isInvalid;
@@ -63,7 +63,7 @@ class Signin extends Component {
               value={password} type="password"
               placeholder="Password"
             />
-            <button disabled={loading || this.checkIfValid()} type="submit">Sign Up</button>
+            <button disabled={loading || this.validateForm()} type="submit">Sign Up</button>
             {error && <Error error={error} />}
           </form>
         )}

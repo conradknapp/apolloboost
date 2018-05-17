@@ -32,13 +32,14 @@ class CreateRecipe extends Component {
     this.setState({ ...initialState });
   }
 
-  checkIfValid = () => {
+  validateForm = () => {
     const { name, instructions, category, description } = this.state;
     const isInvalid = !name || !instructions || !category || !description;
     return isInvalid;
   }
 
   render() {
+    console.log(localStorage.getItem('token'));
     const { name, instructions, category, description } = this.state;
 
     return (
@@ -73,7 +74,7 @@ class CreateRecipe extends Component {
               onChange={this.handleChange}
               placeholder="Add instructions"
             />
-            <button disabled={loading || this.checkIfValid()} type="submit">Add Recipe</button>
+            <button disabled={loading || this.validateForm()} type="submit">Add Recipe</button>
             {error && <Error error={error} />}
           </form>
         )}

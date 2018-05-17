@@ -35,7 +35,7 @@ class Signup extends Component {
     this.setState({ ...initialState });
   }
 
-  checkIfValid = () => {
+  validateForm = () => {
     const { username, email, password, passwordConfirmation } = this.state;
     const isInvalid = !username || !email || !password || password !== passwordConfirmation;
     return isInvalid;
@@ -77,7 +77,7 @@ class Signup extends Component {
               type="password"
               placeholder="Confirm Password"
             />
-            <button disabled={loading || this.checkIfValid()} type="submit">Sign Up</button>
+            <button disabled={loading || this.validateForm()} type="submit">Sign Up</button>
             {error && <Error error={error} />}
           </form>
         )}
