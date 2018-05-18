@@ -7,10 +7,11 @@ import registerServiceWorker from './registerServiceWorker';
 
 // Import components
 import App from './components/App';
-import Signin from './components/Signin';
-import Signup from './components/Signup';
-import Recipes from './components/Recipes';
-import CreateRecipe from './components/CreateRecipe';
+import Signin from './components/Auth/Signin';
+import Signup from './components/Auth/Signup';
+import Signout from './components/Auth/Signout';
+import Recipes from './components/Recipe/Recipes';
+import CreateRecipe from './components/Recipe/CreateRecipe';
 import Navbar from './components/Navbar';
 
 // import Apollo packages
@@ -33,10 +34,12 @@ const authenticateUser = () => {
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    authenticateUser() ? <Component {...props} /> : <Redirect to={{
-      pathname: '/signin',
-      state: { from: props.location }
-    }} />
+    authenticateUser() ?
+      <Component {...props} /> :
+      <Redirect to={{
+        pathname: '/signin',
+        state: { from: props.location }
+      }} />
   )} />
 );
 
@@ -49,16 +52,17 @@ const Root = () => (
       <Route path="/recipes" exact component={Recipes} />
       <Route path="/signin" exact component={Signin} />
       <Route path="/signup" exact component={Signup} />
+      <Route path="/signout" exact component={Signout} />
     </React.Fragment>
   </Router>
 );
 
 // Wrap App component with ApolloProvider
 ReactDOM.render(
-<ApolloProvider client={client}>
-  <Root />
-</ApolloProvider>,
-document.getElementById('root')
+  <ApolloProvider client={client}>
+    <Root />
+  </ApolloProvider>,
+  document.getElementById('root')
 );
 
 registerServiceWorker();

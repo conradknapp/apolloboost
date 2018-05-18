@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import { withRouter } from "react-router-dom";
 
-import Error from './Error';
-import { SIGNIN_USER } from '../queries';
+import Error from '../Error';
+import { SIGNIN_USER } from '../../queries';
 
 const initialState = {
   username: '',
@@ -24,9 +24,9 @@ class Signin extends Component {
     signinUser().then(async ({ data }) => {
       console.log(data);
       localStorage.setItem('token', data.signinUser.token);
-      const redirectPath = this.props.location.state.from.pathname;
+      const { from } = this.props.location.state || { from: { pathname: '/' }};
       this.clearState();
-      this.props.history.push(redirectPath);
+      this.props.history.push(from);
     });
   };
 

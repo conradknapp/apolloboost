@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import { withRouter } from "react-router-dom";
 
-import Error from './Error';
-import { CREATE_USER } from '../queries';
+import Error from '../Error';
+import { CREATE_USER } from '../../queries';
 
 const initialState = {
   username: '',

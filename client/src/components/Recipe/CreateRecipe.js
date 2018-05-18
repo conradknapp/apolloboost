@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 
-import Error from './Error';
-import { CREATE_RECIPE } from '../queries';
+import Error from '../Error';
+import { CREATE_RECIPE } from '../../queries';
 
 const initialState = {
   name: '',

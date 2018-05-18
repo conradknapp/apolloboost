@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 
-import { GET_RECIPES } from '../queries';
+import { GET_RECIPES } from '../../queries';
 
 class Recipes extends Component {
   render() {
