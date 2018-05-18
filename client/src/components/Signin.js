@@ -24,8 +24,9 @@ class Signin extends Component {
     signinUser().then(async ({ data }) => {
       console.log(data);
       localStorage.setItem('token', data.signinUser.token);
+      const redirectPath = this.props.location.state.from.pathname;
       this.clearState();
-      this.props.history.push('/');
+      this.props.history.push(redirectPath);
     });
   };
 
@@ -41,9 +42,11 @@ class Signin extends Component {
 
   render() {
     const { username, password } = this.state;
+    const { from } = this.props.location.state || { from: { pathname: '/' }};
 
     return (
       <React.Fragment>
+      {from.pathname !== "/" && <h2>You must be logged in to access {from.pathname}</h2>}
       <h2 className="App">Sign in</h2>
       <Mutation
         mutation={SIGNIN_USER}
