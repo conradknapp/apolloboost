@@ -46,7 +46,7 @@ class Signin extends Component {
 
     return (
       <React.Fragment>
-      {from.pathname !== "/" && <h2>You must be logged in to access {from.pathname}</h2>}
+      {from.pathname !== "/" && <h2 className="App">You must be logged in to access {from.pathname}</h2>}
       <h2 className="App">Sign in</h2>
       <Mutation
         mutation={SIGNIN_USER}

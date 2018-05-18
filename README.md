@@ -5,3 +5,4 @@
 * [Twitter clone - Rwieruch](https://github.com/rwieruch/twitter-graphql-clone)
 * [Mongoose Password Hashing - Stack Overflow](https://stackoverflow.com/questions/14588032/mongoose-password-hashing#14595363)
 * [PopMotion - Animations for React](https://popmotion.io/pose/)
+* [Rerender Component on Route Change - codementor.io](https://www.codementor.io/valentino/react-re-render-a-component-on-route-or-props-change-gzeei5pc1)
