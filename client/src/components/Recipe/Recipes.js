@@ -1,24 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Query } from 'react-apollo';
 
+import Recipe from './Recipe';
 import { GET_RECIPES } from '../../queries';
 
-class Recipes extends Component {
-  render() {
-    return (
-      <div className="App">
-        <h1>All Recipes</h1>
-        <Query query={GET_RECIPES}>
-          {({ loading, error, data }) => {
-            if (loading) return <div>Loading...</div>;
-            if (error) return <div>Error :(</div>;
-            console.log(data);
-            return <div>Hello world</div>
-          }}
-        </Query>
-      </div>
-    );
-  }
-}
+const Recipes = () => (
+  <div className="App">
+    <h1>All Recipes</h1>
+    <Query query={GET_RECIPES}>
+      {({ loading, error, data }) => {
+        if (loading) return <div>Loading...</div>;
+        if (error) return <div>Error :(</div>;
+        return (
+          <ul>
+            {data.getAllRecipes.map((recipe, id) =>
+            <Recipe key={id} {...recipe} />)}
+          </ul>
+        )
+      }}
+    </Query>
+  </div>
+);
 
 export default Recipes;
