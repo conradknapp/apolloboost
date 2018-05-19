@@ -38,6 +38,15 @@ export const CREATE_RECIPE = gql`
 `;
 
 /* User Queries */
+export const GET_USER = gql`
+  query($username: String!) {
+    getUser(username: $username) {
+      username
+      email
+    }
+  }
+`;
+
 export const CREATE_USER = gql`
   mutation($username: String!, $email: String!, $password: String!) {
     createUser(username: $username, email: $email, password: $password) {

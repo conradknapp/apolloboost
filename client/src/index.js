@@ -7,12 +7,13 @@ import registerServiceWorker from './registerServiceWorker';
 
 // Import components
 import App from './components/App';
+import Navbar from './components/Navbar';
+import Profile from './components/Profile';
 import Signin from './components/Auth/Signin';
 import Signup from './components/Auth/Signup';
 import Signout from './components/Auth/Signout';
 import Recipes from './components/Recipe/Recipes';
 import CreateRecipe from './components/Recipe/CreateRecipe';
-import Navbar from './components/Navbar';
 
 // import Apollo packages
 import ApolloClient from 'apollo-boost';
@@ -52,6 +53,7 @@ const Root = () => (
       <Route path="/recipes" exact component={Recipes} />
       <Route path="/signin" exact component={Signin} />
       <Route path="/signup" exact component={Signup} />
+      <PrivateRoute path="/profile" exact component={Profile} />
       <Route path="/signout" exact component={Signout} />
     </React.Fragment>
   </Router>

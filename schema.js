@@ -20,6 +20,7 @@ exports.typeDefs = `
   type Query {
     getLatestRecipes: [Recipe]
     getAllRecipes: [Recipe]
+    getUser(username: String!): User
   }
 
   type Mutation {

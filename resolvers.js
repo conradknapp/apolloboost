@@ -18,6 +18,10 @@ exports.resolvers = {
     getAllRecipes: async (root) => {
       const allRecipes = await Recipe.find();
       return allRecipes;
+    },
+    getUser: async (root, { username }) => {
+      const user = await User.findOne({ username });
+      return user;
     }
   },
   Mutation: {
