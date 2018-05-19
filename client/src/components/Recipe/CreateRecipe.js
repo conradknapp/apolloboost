@@ -39,7 +39,6 @@ class CreateRecipe extends Component {
   }
 
   render() {
-    console.log(localStorage.getItem('token'));
     const { name, instructions, category, description } = this.state;
 
     return (

@@ -9,6 +9,7 @@ import registerServiceWorker from './registerServiceWorker';
 import App from './components/App';
 import Navbar from './components/Navbar';
 import Profile from './components/Profile';
+import withSession from './components/withSession';
 import Signin from './components/Auth/Signin';
 import Signup from './components/Auth/Signup';
 import Signout from './components/Auth/Signout';
@@ -36,7 +37,7 @@ const authenticateUser = () => {
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     authenticateUser() ?
-      <Component {...props} /> :
+      <Component {...props} {...rest} /> :
       <Redirect to={{
         pathname: '/signin',
         state: { from: props.location }
@@ -44,25 +45,27 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   )} />
 );
 
-const Root = () => (
+const Root = ({ session, username }) => (
   <Router>
     <React.Fragment>
-      <Navbar />
+      <Navbar session={session} />
       <Route path="/" exact component={App} />
       <PrivateRoute path="/recipe" component={CreateRecipe} />
       <Route path="/recipes" exact component={Recipes} />
       <Route path="/signin" exact component={Signin} />
       <Route path="/signup" exact component={Signup} />
-      <PrivateRoute path="/profile" exact component={Profile} />
+      <PrivateRoute path="/profile" session={session} username={username} exact component={Profile} />
       <Route path="/signout" exact component={Signout} />
     </React.Fragment>
   </Router>
 );
 
+const Application = withSession(Root);
+
 // Wrap App component with ApolloProvider
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Root />
+    <Application />
   </ApolloProvider>,
   document.getElementById('root')
 );
