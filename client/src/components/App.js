@@ -12,11 +12,12 @@ const App = () => (
       {({ loading, error, data }) => {
         if (loading) return <div>Loading...</div>;
         if (error) return <div>Error :(</div>;
+        console.log(data);
         return (
-        <ul>
-          {data.getLatestRecipes.map((recipe, id) =>
-          <Recipe key={id} {...recipe} />)}
-        </ul>
+          <ul>
+            {data.getLatestRecipes.map((recipe) =>
+            <Recipe key={recipe.id} {...recipe} />)}
+          </ul>
         )
       }}
     </Query>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Query } from 'react-apollo';
+import jwtDecode from 'jwt-decode';
 
+import { Query } from 'react-apollo';
 import { GET_USER } from '../queries';
 
-import jwtDecode from 'jwt-decode';
 
 class Profile extends Component {
   state = {
@@ -32,7 +32,7 @@ class Profile extends Component {
         if (error) return <div>Error :(</div>;
         console.log(data);
         return (
-        <div>
+        <div className="App">
           <p>{data.getUser.username}</p>
           <p>{data.getUser.email}</p>
         </div>

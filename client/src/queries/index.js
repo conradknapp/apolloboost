@@ -4,11 +4,13 @@ import { gql } from 'apollo-boost';
 export const GET_RECIPES = gql`
   query {
     getAllRecipes {
+      id
       name
       description
       category
       instructions
       createdDate
+      likes
     }
   }
 `;
@@ -16,11 +18,13 @@ export const GET_RECIPES = gql`
 export const LATEST_RECIPES = gql`
   query {
     getLatestRecipes {
+      id
       name
       description
       category
       instructions
       createdDate
+      likes
     }
   }
 `;
@@ -28,11 +32,25 @@ export const LATEST_RECIPES = gql`
 export const CREATE_RECIPE = gql`
   mutation($name: String, $description: String, $instructions: String, $category: String) {
     createRecipe(name: $name, description: $description, instructions: $instructions, category: $category) {
+      id
       name
       description
       instructions
       createdDate
       category
+    }
+  }
+`;
+
+export const LIKE_RECIPE = gql`
+  mutation($id: String!) {
+    likeRecipe(id: $id) {
+      id
+      likes
+      name
+      category
+      instructions
+      description
     }
   }
 `;
