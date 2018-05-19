@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
+import { withRouter } from 'react-router-dom';
 
 import Error from '../Error';
 import { CREATE_RECIPE } from '../../queries';
@@ -25,6 +26,7 @@ class CreateRecipe extends Component {
     createRecipe().then(async ({ data }) => {
       console.log(data);
       this.clearState();
+      this.props.history.push('/');
     });
   };
 
@@ -83,4 +85,4 @@ class CreateRecipe extends Component {
   }
 };
 
-export default CreateRecipe;
+export default withRouter(CreateRecipe);

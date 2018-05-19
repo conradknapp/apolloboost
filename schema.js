@@ -21,13 +21,15 @@ exports.typeDefs = `
 
   type Query {
     getLatestRecipes: [Recipe]
-    getAllRecipes: [Recipe]
+    getAllRecipes(searchTerm: String): [Recipe]
+
     getUser(username: String!): User
   }
 
   type Mutation {
     createRecipe(name: String, category: String, description: String, instructions: String): Recipe
     likeRecipe(id: String!): Recipe
+
     signinUser(username: String!, password: String!): Token!
     createUser(username: String!, password: String!, email: String!): Token!
   }

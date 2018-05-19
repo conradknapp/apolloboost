@@ -15,9 +15,14 @@ exports.resolvers = {
       const latestRecipes = await Recipe.find().sort({ createdDate: 'desc' }).limit(1);
       return latestRecipes;
     },
-    getAllRecipes: async (root) => {
-      const allRecipes = await Recipe.find();
-      return allRecipes;
+    getAllRecipes: async (root, { searchTerm }) => {
+      if (searchTerm) {
+        return Recipe
+          .find({ $text: { $search: searchTerm } })
+          .sort({ likes: "desc" });
+      } else {
+        return await Recipe.find();
+      }
     },
     getUser: async (root, { username }) => {
       const user = await User.findOne({ username });

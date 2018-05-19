@@ -1,25 +1,45 @@
 import React from 'react';
-import { Query } from 'react-apollo';
+import { ApolloConsumer } from 'react-apollo';
 
 import Recipe from './Recipe';
 import { GET_RECIPES } from '../../queries';
 
-const Recipes = () => (
-  <div className="App">
-    <h1>All Recipes</h1>
-    <Query query={GET_RECIPES}>
-      {({ loading, error, data }) => {
-        if (loading) return <div>Loading...</div>;
-        if (error) return <div>Error :(</div>;
-        return (
-          <ul>
-            {data.getAllRecipes.map((recipe, id) =>
-            <Recipe key={id} {...recipe} />)}
+class Recipes extends React.Component {
+  state = {
+    recipes: []
+  };
+
+  render() {
+    const { recipes } = this.state;
+    return (
+      <ApolloConsumer>
+      {client => (
+        <div className="App">
+          <input
+            type="search"
+            name="searchTerm"
+            placeholder="Search for Recipes"
+            onChange={async (event) => {
+              event.persist();
+              const { data } = await client.query({
+                query: GET_RECIPES,
+                variables: { searchTerm: event.target.value }
+              });
+              this.setState({
+                recipes: data.getAllRecipes
+              });
+              console.log(data);
+            }}
+          />
+          <ul className="App">
+            {recipes.map((recipe) =>
+            <Recipe key={recipe.id} {...recipe} />)}
           </ul>
-        )
-      }}
-    </Query>
-  </div>
-);
+        </div>
+      )}
+      </ApolloConsumer>
+    )
+ };
+}
 
 export default Recipes;

@@ -2,8 +2,8 @@ import { gql } from 'apollo-boost';
 
 /* Recipes Queries */
 export const GET_RECIPES = gql`
-  query {
-    getAllRecipes {
+  query($searchTerm: String) {
+    getAllRecipes(searchTerm: $searchTerm) {
       id
       name
       description

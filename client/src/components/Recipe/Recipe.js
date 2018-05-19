@@ -5,22 +5,22 @@ import { LIKE_RECIPE } from '../../queries';
 
 const handleClick = (id, likeRecipe) => {
   likeRecipe().then(async ({ data }) => {
-    console.log(data);
+    // console.log(data);
   });
 }
 
-const Recipe = ({ id, name, description, instructions, category, likes }) => (
+const Recipe = ({ id, name, description, instructions, category, likes, auth }) => (
   <li>
-    <p>{name}</p>
-    <p>{description}</p>
-    <p>{instructions}</p>
-    <p>{category}</p>
+    <p>Name: {name}</p>
+    <p>Category: {category}</p>
+    <p>Description: {description}</p>
+    <p>Instructions: {instructions}</p>
     <p>Likes: {likes}</p>
-    <Mutation mutation={LIKE_RECIPE} variables={{ id }} >
+    {auth && <Mutation mutation={LIKE_RECIPE} variables={{ id }} >
       {(likeRecipe, { data, loading, error }) => (
       <button onClick={(id) => handleClick(id, likeRecipe)}>Like</button>
       )}
-    </Mutation>
+    </Mutation>}
   </li>
 )
 export default Recipe;

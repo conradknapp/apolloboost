@@ -45,10 +45,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   )} />
 );
 
-const Root = ({ session, username }) => (
+const Root = ({ session, username, auth }) => (
   <Router>
     <React.Fragment>
-      <Navbar session={session} />
+      <Navbar session={session} username={username} />
       <Route path="/" exact component={App} />
       <PrivateRoute path="/recipe" component={CreateRecipe} />
       <Route path="/recipes" exact component={Recipes} />
