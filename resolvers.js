@@ -21,7 +21,7 @@ exports.resolvers = {
           .find({ $text: { $search: searchTerm } })
           .sort({ likes: "desc" });
       } else {
-        return await Recipe.find();
+        return await Recipe.find().sort({ createdDate: "desc" });;
       }
     },
     getUser: async (root, { username }) => {

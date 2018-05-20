@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Mutation } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
 
 import Error from '../Error';
-import { CREATE_RECIPE } from '../../queries';
+import { CREATE_RECIPE, GET_RECIPES } from '../../queries';
 
 const initialState = {
   name: '',
@@ -40,15 +40,27 @@ class CreateRecipe extends Component {
     return isInvalid;
   }
 
+  updateCache = (cache, { data: { createRecipe } }) => {
+    const { getAllRecipes } = cache.readQuery({ query: GET_RECIPES });
+
+    cache.writeQuery({
+      query: GET_RECIPES,
+      data: {
+        getAllRecipes: getAllRecipes.concat(createRecipe)
+      }
+    })
+  }
+
   render() {
     const { name, instructions, category, description } = this.state;
 
     return (
-      <React.Fragment>
+      <Fragment>
       <h2 className="App">Add Recipe</h2>
       <Mutation
         mutation={CREATE_RECIPE}
         variables={{ name, instructions, category, description }}
+        update={this.updateCache}
       >
         {(createRecipe, { data, loading, error }) => (
           <form className="App" onSubmit={event => this.handleSubmit(event, createRecipe)}>
@@ -80,7 +92,7 @@ class CreateRecipe extends Component {
           </form>
         )}
       </Mutation>
-      </React.Fragment>
+      </Fragment>
     );
   }
 };

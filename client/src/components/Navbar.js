@@ -43,7 +43,7 @@ class Navbar extends React.Component {
 
   render() {
     const { auth, username } = this.state;
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <nav>
       <ul className="App" style={{ display: 'flex', justifyContent: 'space-evenly', listStyle: 'none' }}>
