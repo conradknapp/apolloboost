@@ -1,6 +1,20 @@
 import { gql } from 'apollo-boost';
 
 /* Recipes Queries */
+export const GET_RECIPE = gql`
+  query($id: String) {
+    getRecipe(id: $id) {
+      id
+      name
+      description
+      category
+      instructions
+      createdDate
+      likes
+    }
+  }
+`;
+
 export const GET_RECIPES = gql`
   query($searchTerm: String) {
     getAllRecipes(searchTerm: $searchTerm) {

@@ -20,6 +20,7 @@ exports.typeDefs = `
   }
 
   type Query {
+    getRecipe(id: String): Recipe
     getLatestRecipes: [Recipe]
     getAllRecipes(searchTerm: String): [Recipe]
 

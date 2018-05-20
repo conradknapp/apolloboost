@@ -28,11 +28,11 @@ class Recipes extends React.Component {
               this.setState({
                 recipes: data.getAllRecipes
               });
-              console.log(data);
+              // console.log(data);
             }}
           />
           <ul className="App">
-            {recipes.map((recipe) =>
+            {recipes.map(recipe =>
             <Recipe key={recipe.id} {...recipe} />)}
           </ul>
         </div>

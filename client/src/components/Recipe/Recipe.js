@@ -1,5 +1,6 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
+import { Link } from 'react-router-dom';
 
 import { LIKE_RECIPE, GET_RECIPES } from '../../queries';
 
@@ -21,7 +22,7 @@ const update = (cache, { data: { likeRecipe }}) => {
 
 const Recipe = ({ id, name, description, instructions, category, likes, auth }) => (
   <li>
-    <p>Name: {name}</p>
+    <Link to={`/recipes/${id}`}><p>Name: {name}</p></Link>
     <p>Category: {category}</p>
     <p>Description: {description}</p>
     <p>Instructions: {instructions}</p>

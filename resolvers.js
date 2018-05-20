@@ -11,6 +11,9 @@ const createToken = async (user, secret, expiresIn) => {
 
 exports.resolvers = {
   Query: {
+    getRecipe: async (root, { id }) => {
+      return await Recipe.findOne({ id });
+    },
     getLatestRecipes: async (root) => {
       const latestRecipes = await Recipe.find().sort({ createdDate: 'desc' }).limit(1);
       return latestRecipes;
@@ -21,7 +24,7 @@ exports.resolvers = {
           .find({ $text: { $search: searchTerm } })
           .sort({ likes: "desc" });
       } else {
-        return await Recipe.find().sort({ createdDate: "desc" });;
+        return await Recipe.find().sort({ createdDate: "desc" });
       }
     },
     getUser: async (root, { username }) => {

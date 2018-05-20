@@ -13,6 +13,7 @@ import withSession from './components/withSession';
 import Signin from './components/Auth/Signin';
 import Signup from './components/Auth/Signup';
 import Signout from './components/Auth/Signout';
+import RecipePage from './components/Recipe/RecipePage';
 import Recipes from './components/Recipe/Recipes';
 import CreateRecipe from './components/Recipe/CreateRecipe';
 
@@ -52,6 +53,7 @@ const Root = ({ session, username, auth }) => (
       <Route path="/" exact component={App} />
       <PrivateRoute path="/recipe" component={CreateRecipe} />
       <Route path="/recipes" exact component={Recipes} />
+      <Route path="/recipes/:id" exact component={RecipePage} />
       <Route path="/signin" exact component={Signin} />
       <Route path="/signup" exact component={Signup} />
       <PrivateRoute path="/profile" session={session} username={username} exact component={Profile} />
