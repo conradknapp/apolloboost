@@ -13,6 +13,7 @@ exports.typeDefs = `
     username: String!
     password: String!
     email: String!
+    joinDate: String!
   }
 
   type Token {

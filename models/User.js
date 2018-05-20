@@ -15,6 +15,10 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true
+  },
+  joinDate: {
+    type: Date,
+    default: Date.now
   }
 });
 

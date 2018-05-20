@@ -18,7 +18,7 @@ class RecipePage extends React.Component {
     return (
       <Query query={GET_RECIPE} variables={{ id }}>
       {({ loading, error, data }) => {
-        if (loading) return <div>Loading...</div>;
+        if (loading) return <div className="App">Loading...</div>;
         if (error) return <div>Error :(</div>;
         console.log(data);
         return (

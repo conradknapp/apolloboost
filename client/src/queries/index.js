@@ -75,6 +75,7 @@ export const GET_USER = gql`
     getUser(username: $username) {
       username
       email
+      joinDate
     }
   }
 `;
