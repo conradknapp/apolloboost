@@ -1,10 +1,10 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const Recipe = require('./models/Recipe');
-const User = require('./models/User');
-require('dotenv').config({ path: 'variables.env' });
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const Recipe = require("./models/Recipe");
+const User = require("./models/User");
+require("dotenv").config({ path: "variables.env" });
 
 // GraphQL-Express Packages
 const { graphqlExpress, graphiqlExpress } = require("apollo-server-express");
@@ -23,7 +23,7 @@ const schema = makeExecutableSchema({
 // Connects to Database
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log('DB connected'))
+  .then(() => console.log("DB connected"))
   .catch(err => console.error(err));
 
 // Initializes app
@@ -40,17 +40,17 @@ app.use(
 // Sets up Express middleware
 app.use(
   "/graphql",
-  cors('*'),
+  cors("*"),
   bodyParser.json(),
   graphqlExpress({ schema, context: { Recipe, User } })
 );
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  })
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
 }
 
 const PORT = process.env.PORT || 4444;

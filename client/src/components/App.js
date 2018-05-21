@@ -1,10 +1,10 @@
-import React from 'react';
-import './App.css';
-import { Query } from 'react-apollo';
+import React from "react";
+import "./App.css";
+import { Query } from "react-apollo";
 
-import withSession from "./withSession";
-import Recipe from './Recipe/Recipe';
-import { GET_RECIPES } from '../queries';
+// import withSession from "./withSession";
+import Recipe from "./Recipe/Recipe";
+import { GET_RECIPES } from "../queries";
 
 const App = ({ auth }) => (
   <div className="App">
@@ -15,17 +15,14 @@ const App = ({ auth }) => (
         if (error) return <div>Error :(</div>;
         return (
           <ul>
-            {data.getAllRecipes.map(recipe =>
-              <Recipe key={recipe.id}
-                auth={auth}
-                {...recipe}
-              />)
-            }
+            {data.getAllRecipes.map(recipe => (
+              <Recipe key={recipe.id} {...recipe} />
+            ))}
           </ul>
-        )
+        );
       }}
     </Query>
   </div>
 );
 
-export default withSession(App);
+export default App;

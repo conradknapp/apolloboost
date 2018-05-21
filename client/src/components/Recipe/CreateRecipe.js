@@ -1,17 +1,17 @@
-import React, { Component, Fragment } from 'react';
-import { Mutation } from 'react-apollo';
-import { withRouter } from 'react-router-dom';
+import React, { Component, Fragment } from "react";
+import { Mutation } from "react-apollo";
+import { withRouter } from "react-router-dom";
 
-import Error from '../Error';
-import withSession from '../withSession';
-import { CREATE_RECIPE, GET_RECIPES } from '../../queries';
+import Error from "../Error";
+import withSession from "../withSession";
+import { CREATE_RECIPE, GET_RECIPES } from "../../queries";
 
 const initialState = {
-  name: '',
-  instructions: '',
-  category: 'Breakfast',
-  description: '',
-  username: ''
+  name: "",
+  instructions: "",
+  category: "Breakfast",
+  description: "",
+  username: ""
 };
 
 class CreateRecipe extends Component {
@@ -26,26 +26,26 @@ class CreateRecipe extends Component {
     this.setState({
       [evt.target.name]: evt.target.value
     });
-  }
+  };
 
   handleSubmit = (event, createRecipe) => {
     event.preventDefault();
     createRecipe().then(async ({ data }) => {
       console.log(data);
       this.clearState();
-      this.props.history.push('/');
+      this.props.history.push("/");
     });
   };
 
   clearState = () => {
     this.setState({ ...initialState });
-  }
+  };
 
   validateForm = () => {
     const { name, instructions, category, description } = this.state;
     const isInvalid = !name || !instructions || !category || !description;
     return isInvalid;
-  }
+  };
 
   updateCache = (cache, { data: { createRecipe } }) => {
     const { getAllRecipes } = cache.readQuery({ query: GET_RECIPES });
@@ -55,8 +55,8 @@ class CreateRecipe extends Component {
       data: {
         getAllRecipes: getAllRecipes.concat(createRecipe)
       }
-    })
-  }
+    });
+  };
 
   render() {
     const { name, instructions, category, description, username } = this.state;
@@ -70,7 +70,10 @@ class CreateRecipe extends Component {
           update={this.updateCache}
         >
           {(createRecipe, { data, loading, error }) => (
-            <form className="App" onSubmit={event => this.handleSubmit(event, createRecipe)}>
+            <form
+              className="App"
+              onSubmit={event => this.handleSubmit(event, createRecipe)}
+            >
               <input
                 name="name"
                 onChange={this.handleChange}
@@ -78,7 +81,11 @@ class CreateRecipe extends Component {
                 type="text"
                 placeholder="Recipe Name"
               />
-              <select name="category" value={category} onChange={this.handleChange}>
+              <select
+                name="category"
+                value={category}
+                onChange={this.handleChange}
+              >
                 <option value="Breakfast">Breakfast</option>
                 <option value="Lunch">Lunch</option>
                 <option value="Snack">Snack</option>
@@ -97,9 +104,9 @@ class CreateRecipe extends Component {
                 onChange={this.handleChange}
                 placeholder="Add instructions"
               />
-              <button
-                disabled={loading || this.validateForm()}
-                type="submit">Add Recipe</button>
+              <button disabled={loading || this.validateForm()} type="submit">
+                Add Recipe
+              </button>
               {error && <Error error={error} />}
             </form>
           )}
@@ -107,6 +114,6 @@ class CreateRecipe extends Component {
       </Fragment>
     );
   }
-};
+}
 
 export default withSession(withRouter(CreateRecipe));

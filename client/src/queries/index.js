@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 /* Recipes Queries */
 export const GET_RECIPE = gql`
@@ -56,8 +56,20 @@ export const LATEST_RECIPES = gql`
 `;
 
 export const CREATE_RECIPE = gql`
-  mutation($name: String, $description: String, $instructions: String, $category: String, $username: String) {
-    createRecipe(name: $name, description: $description, instructions: $instructions, category: $category, username: $username) {
+  mutation(
+    $name: String
+    $description: String
+    $instructions: String
+    $category: String
+    $username: String
+  ) {
+    createRecipe(
+      name: $name
+      description: $description
+      instructions: $instructions
+      category: $category
+      username: $username
+    ) {
       id
       name
       description

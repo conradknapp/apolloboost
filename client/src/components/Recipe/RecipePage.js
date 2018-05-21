@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import { Query } from 'react-apollo';
-import { GET_RECIPE } from '../../queries';
+import { Query } from "react-apollo";
+import { GET_RECIPE } from "../../queries";
 
 class RecipePage extends React.Component {
   state = {
-    id: ''
+    id: ""
   };
 
   componentDidMount() {
@@ -23,13 +23,13 @@ class RecipePage extends React.Component {
           if (error) return <div>Error :(</div>;
           // console.log(data);
           return (
-          <div className="App">
-            <h2>{data.getRecipe.name}</h2>
-            <p>{data.getRecipe.category}</p>
-            <p>{data.getRecipe.description}</p>
-            <p>{data.getRecipe.instructions}</p>
-          </div>
-          )
+            <div className="App">
+              <h2>{data.getRecipe.name}</h2>
+              <p>{data.getRecipe.category}</p>
+              <p>{data.getRecipe.description}</p>
+              <p>{data.getRecipe.instructions}</p>
+            </div>
+          );
         }}
       </Query>
     );
