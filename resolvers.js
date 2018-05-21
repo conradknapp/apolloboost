@@ -12,8 +12,7 @@ const createToken = async (user, secret, expiresIn) => {
 exports.resolvers = {
   Query: {
     getRecipe: async (root, { _id }) => {
-      var objectId = mongoose.Types.ObjectId(_id);
-      const recipe = await Recipe.findById({ _id: objectId });
+      const recipe = await Recipe.findById({ _id });
       return recipe;
     },
     getAllRecipes: async (root, { searchTerm }) => {

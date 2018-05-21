@@ -1,6 +1,6 @@
 exports.typeDefs = `
   type Recipe {
-    _id: String
+    _id: ID
     name: String
     description: String
     category: String
@@ -11,7 +11,7 @@ exports.typeDefs = `
   }
 
   type User {
-    _id: String
+    _id: ID
     username: String!
     password: String!
     email: String!
@@ -20,7 +20,7 @@ exports.typeDefs = `
   }
 
   type Favorite {
-    _id: String
+    _id: ID
     name: String
     description: String
     category: String
@@ -35,7 +35,7 @@ exports.typeDefs = `
   }
 
   type Query {
-    getRecipe(_id: String): Recipe
+    getRecipe(_id: ID): Recipe
     getAllRecipes(searchTerm: String): [Recipe]
     getCreatedRecipes(username: String!): [Recipe]
 
@@ -44,7 +44,7 @@ exports.typeDefs = `
 
   type Mutation {
     createRecipe(name: String, category: String, description: String, instructions: String, username: String): Recipe
-    likeRecipe(_id: String!, username: String!): Recipe
+    likeRecipe(_id: ID!, username: String!): Recipe
 
     signinUser(username: String!, password: String!): Token!
     createUser(username: String!, password: String!, email: String!): Token!

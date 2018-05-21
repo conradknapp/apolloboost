@@ -2,7 +2,7 @@ import { gql } from "apollo-boost";
 
 /* Recipes Queries */
 export const GET_RECIPE = gql`
-  query($_id: String!) {
+  query($_id: ID!) {
     getRecipe(_id: $_id) {
       _id
       name
@@ -68,7 +68,7 @@ export const CREATE_RECIPE = gql`
 `;
 
 export const LIKE_RECIPE = gql`
-  mutation($_id: String!, $username: String!) {
+  mutation($_id: ID!, $username: String!) {
     likeRecipe(_id: $_id, username: $username) {
       _id
       likes
