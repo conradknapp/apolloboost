@@ -28,8 +28,8 @@ const Recipe = ({
   instructions,
   category,
   likes,
-  auth,
-  username
+  username,
+  isAuth
 }) => (
   <li>
     <Link to={`/recipes/${id}`}>
@@ -40,7 +40,7 @@ const Recipe = ({
     <p>Instructions: {instructions}</p>
     <p>Likes: {likes}</p>
     <p>Created by: {username}</p>
-    {auth && (
+    {isAuth && (
       <Mutation mutation={LIKE_RECIPE} variables={{ id }} update={update}>
         {(likeRecipe, { data, loading, error }) => (
           <button onClick={event => handleClick(event, likeRecipe)}>

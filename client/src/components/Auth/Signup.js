@@ -16,15 +16,14 @@ class Signup extends Component {
   state = { ...initialState };
 
   handleChange = evt => {
-    this.setState({
-      [evt.target.name]: evt.target.value
-    });
+    const { name, value } = evt.target;
+    this.setState({ [name]: value });
   };
 
   handleSubmit = (event, createUser) => {
     event.preventDefault();
     createUser().then(async ({ data }) => {
-      console.log(data);
+      // console.log(data);
       localStorage.setItem("token", data.createUser.token);
       this.clearState();
       this.props.history.push("/");

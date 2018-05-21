@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import withSession from "../components/withSession";
 
-const Navbar = ({ auth, username }) => (
+const Navbar = ({ isAuth, currentUser }) => (
   <nav>
     <ul
       className="App"
@@ -22,28 +22,28 @@ const Navbar = ({ auth, username }) => (
       <li>
         <Link to="/recipe">Add Recipe</Link>
       </li>
-      {!auth && (
+      {!isAuth && (
         <li>
           <Link to="/signin">Sign In</Link>
         </li>
       )}
-      {!auth && (
+      {!isAuth && (
         <li>
           <Link to="/signup">Sign Up</Link>
         </li>
       )}
-      {auth && (
+      {isAuth && (
         <li>
           <Link to="/profile">Profile</Link>
         </li>
       )}
-      {auth && (
+      {isAuth && (
         <li>
           <Link to="/signout">Sign Out</Link>
         </li>
       )}
     </ul>
-    {username && <h3 className="App">Welcome, {username}</h3>}
+    {currentUser && <h3 className="App">Welcome, {currentUser}</h3>}
   </nav>
 );
 

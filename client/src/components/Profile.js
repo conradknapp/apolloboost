@@ -11,9 +11,9 @@ const formatDate = date => {
   return `${newDate} at ${newTime}`;
 };
 
-const Profile = ({ username }) => (
+const Profile = ({ currentUser }) => (
   <main>
-    <Query query={GET_USER} variables={{ username }}>
+    <Query query={GET_USER} variables={{ username: currentUser }}>
       {({ loading, error, data }) => {
         if (loading) return <div className="App">Loading...</div>;
         if (error) return <div>Error :(</div>;
@@ -26,13 +26,13 @@ const Profile = ({ username }) => (
         );
       }}
     </Query>
-    <Query query={GET_CREATED_RECIPES} variables={{ username }}>
+    <Query query={GET_CREATED_RECIPES} variables={{ username: currentUser }}>
       {({ loading, error, data }) => {
         if (loading) return <div className="App">Loading...</div>;
         if (error) return <div>Error :(</div>;
         return (
           <ul className="App">
-            <h3>{username}'s Recipes</h3>
+            <h3>{currentUser}'s Recipes</h3>
             {!data.getCreatedRecipes.length && (
               <h4>No recipes currently. Go add some!</h4>
             )}

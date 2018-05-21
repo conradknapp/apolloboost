@@ -5,9 +5,9 @@ const withSession = PassedComponent => props => {
   const token = localStorage.getItem("token");
   if (token) {
     var { username, exp } = jwtDecode(token);
-    var auth = exp > Date.now() / 1000;
+    var isAuth = exp > Date.now() / 1000;
   }
-  return <PassedComponent {...props} username={username} auth={auth} />;
+  return <PassedComponent {...props} currentUser={username} isAuth={isAuth} />;
 };
 
 export default withSession;

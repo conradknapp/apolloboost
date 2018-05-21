@@ -14,9 +14,8 @@ class Signin extends Component {
   state = { ...initialState };
 
   handleChange = evt => {
-    this.setState({
-      [evt.target.name]: evt.target.value
-    });
+    const { name, value } = evt.target;
+    this.setState({ [name]: value });
   };
 
   handleSubmit = (event, signinUser) => {

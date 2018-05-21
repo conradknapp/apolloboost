@@ -18,20 +18,19 @@ class CreateRecipe extends Component {
   state = { ...initialState };
 
   componentDidMount() {
-    const { username } = this.props;
-    this.setState({ username });
+    const { currentUser } = this.props;
+    this.setState({ username: currentUser });
   }
 
   handleChange = evt => {
-    this.setState({
-      [evt.target.name]: evt.target.value
-    });
+    const { name, value } = evt.target;
+    this.setState({ [name]: value });
   };
 
   handleSubmit = (event, createRecipe) => {
     event.preventDefault();
     createRecipe().then(async ({ data }) => {
-      console.log(data);
+      // console.log(data);
       this.clearState();
       this.props.history.push("/");
     });
@@ -66,7 +65,13 @@ class CreateRecipe extends Component {
         <h2 className="App">Add Recipe</h2>
         <Mutation
           mutation={CREATE_RECIPE}
-          variables={{ name, instructions, category, description, username }}
+          variables={{
+            name,
+            instructions,
+            category,
+            description,
+            username
+          }}
           update={this.updateCache}
         >
           {(createRecipe, { data, loading, error }) => (

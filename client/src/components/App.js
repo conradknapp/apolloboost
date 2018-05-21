@@ -2,11 +2,10 @@ import React from "react";
 import "./App.css";
 import { Query } from "react-apollo";
 
-// import withSession from "./withSession";
 import Recipe from "./Recipe/Recipe";
 import { GET_RECIPES } from "../queries";
 
-const App = ({ auth }) => (
+const App = () => (
   <div className="App">
     <h1>Recipes</h1>
     <Query query={GET_RECIPES}>
