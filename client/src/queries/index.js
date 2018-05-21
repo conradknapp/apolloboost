@@ -25,6 +25,18 @@ export const GET_RECIPES = gql`
       instructions
       createdDate
       likes
+      username
+    }
+  }
+`;
+
+export const GET_CREATED_RECIPES = gql`
+  query($username: String!) {
+    getCreatedRecipes(username: $username) {
+      id
+      name
+      likes
+      createdDate
     }
   }
 `;
@@ -44,14 +56,15 @@ export const LATEST_RECIPES = gql`
 `;
 
 export const CREATE_RECIPE = gql`
-  mutation($name: String, $description: String, $instructions: String, $category: String) {
-    createRecipe(name: $name, description: $description, instructions: $instructions, category: $category) {
+  mutation($name: String, $description: String, $instructions: String, $category: String, $username: String) {
+    createRecipe(name: $name, description: $description, instructions: $instructions, category: $category, username: $username) {
       id
       name
       description
       instructions
       createdDate
       category
+      username
     }
   }
 `;

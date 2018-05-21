@@ -20,13 +20,14 @@ const update = (cache, { data: { likeRecipe }}) => {
   })
 }
 
-const Recipe = ({ id, name, description, instructions, category, likes, auth }) => (
+const Recipe = ({ id, name, description, instructions, category, likes, auth, username }) => (
   <li>
     <Link to={`/recipes/${id}`}><p>Name: {name}</p></Link>
     <p>Category: {category}</p>
     <p>Description: {description}</p>
     <p>Instructions: {instructions}</p>
     <p>Likes: {likes}</p>
+    <p>Created by: {username}</p>
     {auth && <Mutation mutation={LIKE_RECIPE} variables={{ id }} update={update}>
     {(likeRecipe, { data, loading, error }) => (
     <button onClick={event => handleClick(event, likeRecipe)}>Like</button>

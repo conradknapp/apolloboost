@@ -7,6 +7,7 @@ exports.typeDefs = `
     instructions: String
     createdDate: String
     likes: Int
+    username: String
   }
 
   type User {
@@ -24,12 +25,13 @@ exports.typeDefs = `
     getRecipe(id: String): Recipe
     getLatestRecipes: [Recipe]
     getAllRecipes(searchTerm: String): [Recipe]
+    getCreatedRecipes(username: String!): [Recipe]
 
     getUser(username: String!): User
   }
 
   type Mutation {
-    createRecipe(name: String, category: String, description: String, instructions: String): Recipe
+    createRecipe(name: String, category: String, description: String, instructions: String, username: String): Recipe
     likeRecipe(id: String!): Recipe
 
     signinUser(username: String!, password: String!): Token!

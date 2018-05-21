@@ -27,18 +27,23 @@ exports.resolvers = {
         return await Recipe.find().sort({ createdDate: "desc" });
       }
     },
+    getCreatedRecipes: async (root, { username }) => {
+      const createdRecipes = await Recipe.find({ username });
+      return createdRecipes;
+    },
     getUser: async (root, { username }) => {
       const user = await User.findOne({ username });
       return user;
     }
   },
   Mutation: {
-    createRecipe: async (root, { name, description, instructions, category }) => {
+    createRecipe: async (root, { name, description, instructions, category, username }) => {
       const newRecipe = new Recipe({
         name,
         description,
         category,
-        instructions
+        instructions,
+        username
       }).save();
       return newRecipe;
     },

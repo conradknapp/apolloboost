@@ -28,6 +28,9 @@ const RecipeSchema = new Schema({
   likes: {
     type: Number,
     default: 0
+  },
+  username: {
+    type: String
   }
 });
 

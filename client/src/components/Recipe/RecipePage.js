@@ -15,21 +15,22 @@ class RecipePage extends React.Component {
 
   render() {
     const { id } = this.state;
+
     return (
       <Query query={GET_RECIPE} variables={{ id }}>
-      {({ loading, error, data }) => {
-        if (loading) return <div className="App">Loading...</div>;
-        if (error) return <div>Error :(</div>;
-        console.log(data);
-        return (
-        <div className="App">
-          <p>{data.getRecipe.name}</p>
-          <p>{data.getRecipe.category}</p>
-          <p>{data.getRecipe.description}</p>
-          <p>{data.getRecipe.instructions}</p>
-        </div>
-        )
-      }}
+        {({ loading, error, data }) => {
+          if (loading) return <div className="App">Loading...</div>;
+          if (error) return <div>Error :(</div>;
+          // console.log(data);
+          return (
+          <div className="App">
+            <h2>{data.getRecipe.name}</h2>
+            <p>{data.getRecipe.category}</p>
+            <p>{data.getRecipe.description}</p>
+            <p>{data.getRecipe.instructions}</p>
+          </div>
+          )
+        }}
       </Query>
     );
   }
