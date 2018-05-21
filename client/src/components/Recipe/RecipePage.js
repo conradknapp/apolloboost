@@ -5,23 +5,22 @@ import { GET_RECIPE } from "../../queries";
 
 class RecipePage extends React.Component {
   state = {
-    id: ""
+    _id: ""
   };
 
   componentDidMount() {
-    const { id } = this.props.match.params;
-    this.setState({ id });
+    const { _id } = this.props.match.params;
+    this.setState({ _id });
   }
 
   render() {
-    const { id } = this.state;
-
+    const { _id } = this.state;
     return (
-      <Query query={GET_RECIPE} variables={{ id }}>
+      <Query query={GET_RECIPE} variables={{ _id }}>
         {({ loading, error, data }) => {
           if (loading) return <div className="App">Loading...</div>;
           if (error) return <div>Error :(</div>;
-          // console.log(data);
+          console.log(data);
           return (
             <div className="App">
               <h2>{data.getRecipe.name}</h2>

@@ -21,7 +21,7 @@ const UserSchema = new Schema({
     default: Date.now
   },
   favorites: {
-    type: [String],
+    type: [Schema.Types.ObjectId],
     ref: "Recipe"
   }
 });

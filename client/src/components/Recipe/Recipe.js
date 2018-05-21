@@ -10,8 +10,8 @@ class Recipe extends React.Component {
     clicked: false
   };
 
-  handleClick = (id, likeRecipe, data) => {
-    if (!this.state.clicked || !data.getUser.favorites.includes(id)) {
+  handleClick = (_id, likeRecipe, data) => {
+    if (!this.state.clicked || !data.getUser.favorites.includes(_id)) {
       likeRecipe();
     }
     this.setState(prevState => ({
@@ -22,7 +22,7 @@ class Recipe extends React.Component {
   update = (cache, { data: { likeRecipe } }) => {
     const { getAllRecipes } = cache.readQuery({ query: GET_RECIPES });
     getAllRecipes.map(
-      recipe => (recipe.id === likeRecipe.id ? (recipe.likes += 1) : recipe)
+      recipe => (recipe._id === likeRecipe._id ? (recipe.likes += 1) : recipe)
     );
 
     cache.writeQuery({
@@ -33,7 +33,7 @@ class Recipe extends React.Component {
 
   render() {
     const {
-      id,
+      _id,
       name,
       description,
       instructions,
@@ -47,7 +47,7 @@ class Recipe extends React.Component {
 
     return (
       <li>
-        <Link to={`/recipes/${id}`}>
+        <Link to={`/recipes/${_id}`}>
           <p>Name: {name}</p>
         </Link>
         <p>Category: {category}</p>
@@ -58,7 +58,7 @@ class Recipe extends React.Component {
         {isAuth && (
           <Mutation
             mutation={LIKE_RECIPE}
-            variables={{ id, username }}
+            variables={{ _id, username }}
             update={this.update}
           >
             {(likeRecipe, { data, loading, error }) => (
@@ -68,12 +68,12 @@ class Recipe extends React.Component {
                   if (error) return <div>Error :(</div>;
                   return (
                     <button
-                      disabled={data.getUser.favorites.includes(id) || clicked}
+                      disabled={data.getUser.favorites.includes(_id) || clicked}
                       onClick={event =>
                         this.handleClick(event, likeRecipe, data)
                       }
                     >
-                      {data.getUser.favorites.includes(id) || clicked
+                      {data.getUser.favorites.includes(_id) || clicked
                         ? "Liked!"
                         : "Like"}
                     </button>

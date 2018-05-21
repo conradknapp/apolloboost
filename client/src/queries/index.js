@@ -2,9 +2,9 @@ import { gql } from "apollo-boost";
 
 /* Recipes Queries */
 export const GET_RECIPE = gql`
-  query($id: String) {
-    getRecipe(id: $id) {
-      id
+  query($_id: String!) {
+    getRecipe(_id: $_id) {
+      _id
       name
       description
       category
@@ -18,7 +18,7 @@ export const GET_RECIPE = gql`
 export const GET_RECIPES = gql`
   query($searchTerm: String) {
     getAllRecipes(searchTerm: $searchTerm) {
-      id
+      _id
       name
       description
       category
@@ -33,7 +33,7 @@ export const GET_RECIPES = gql`
 export const GET_CREATED_RECIPES = gql`
   query($username: String!) {
     getCreatedRecipes(username: $username) {
-      id
+      _id
       name
       likes
       createdDate
@@ -56,7 +56,7 @@ export const CREATE_RECIPE = gql`
       category: $category
       username: $username
     ) {
-      id
+      _id
       name
       description
       instructions
@@ -68,9 +68,9 @@ export const CREATE_RECIPE = gql`
 `;
 
 export const LIKE_RECIPE = gql`
-  mutation($id: String!, $username: String!) {
-    likeRecipe(id: $id, username: $username) {
-      id
+  mutation($_id: String!, $username: String!) {
+    likeRecipe(_id: $_id, username: $username) {
+      _id
       likes
       name
       category
@@ -87,7 +87,10 @@ export const GET_USER = gql`
       username
       email
       joinDate
-      favorites
+      favorites {
+        _id
+        name
+      }
     }
   }
 `;

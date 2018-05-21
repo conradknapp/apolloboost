@@ -25,7 +25,9 @@ const Profile = ({ currentUser }) => (
             <p>Join date: {formatDate(data.getUser.joinDate)}</p>
             <ul>
               Favorites:{data.getUser.favorites.map((el, i) => (
-                <li key={i}>{el}</li>
+                <li key={el._id}>
+                  <Link to={`/recipes/${el._id}`}>{el.name}</Link>
+                </li>
               ))}
             </ul>
           </div>
@@ -43,8 +45,8 @@ const Profile = ({ currentUser }) => (
               <h4>No recipes currently. Go add some!</h4>
             )}
             {data.getCreatedRecipes.map(recipe => (
-              <li key={recipe.id}>
-                <Link to={`/recipes/${recipe.id}`}>
+              <li key={recipe._id}>
+                <Link to={`/recipes/${recipe._id}`}>
                   <p>Recipe Name: {recipe.name}</p>
                 </Link>
                 <p>Like Count: {recipe.likes}</p>

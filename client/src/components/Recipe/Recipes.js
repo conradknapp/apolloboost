@@ -32,7 +32,7 @@ class Recipes extends React.Component {
               }}
             />
             <ul className="App">
-              {recipes.map(recipe => <Recipe key={recipe.id} {...recipe} />)}
+              {recipes.map(recipe => <Recipe key={recipe._id} {...recipe} />)}
             </ul>
           </div>
         )}

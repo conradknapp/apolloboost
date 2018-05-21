@@ -11,8 +11,10 @@ const createToken = async (user, secret, expiresIn) => {
 
 exports.resolvers = {
   Query: {
-    getRecipe: async (root, { id }) => {
-      return await Recipe.findOne({ id });
+    getRecipe: async (root, { _id }) => {
+      var objectId = mongoose.Types.ObjectId(_id);
+      const recipe = await Recipe.findById({ _id: objectId });
+      return recipe;
     },
     getAllRecipes: async (root, { searchTerm }) => {
       if (searchTerm) {
@@ -30,7 +32,10 @@ exports.resolvers = {
       return createdRecipes;
     },
     getUser: async (root, { username }) => {
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ username }).populate({
+        path: "favorites",
+        model: "Recipe"
+      });
       return user;
     }
   },
@@ -48,14 +53,14 @@ exports.resolvers = {
       }).save();
       return newRecipe;
     },
-    likeRecipe: async (root, { id, username }) => {
+    likeRecipe: async (root, { _id, username }) => {
       const recipe = await Recipe.findOneAndUpdate(
-        { id },
+        { _id },
         { $inc: { likes: 1 } }
       );
       const user = await User.update(
         { username },
-        { $addToSet: { favorites: id } }
+        { $addToSet: { favorites: _id } }
       );
       return recipe;
     },

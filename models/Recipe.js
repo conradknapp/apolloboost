@@ -3,10 +3,6 @@ const Schema = mongoose.Schema;
 const uuid = require("uuid");
 
 const RecipeSchema = new Schema({
-  id: {
-    type: String,
-    default: uuid.v1
-  },
   name: {
     type: String,
     required: true
