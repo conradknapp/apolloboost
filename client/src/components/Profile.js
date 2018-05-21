@@ -17,11 +17,17 @@ const Profile = ({ currentUser }) => (
       {({ loading, error, data }) => {
         if (loading) return <div className="App">Loading...</div>;
         if (error) return <div>Error :(</div>;
+        console.log(data);
         return (
           <div className="App" style={{ marginBottom: "2em" }}>
             <p>Username: {data.getUser.username}</p>
             <p>Email: {data.getUser.email}</p>
             <p>Join date: {formatDate(data.getUser.joinDate)}</p>
+            <ul>
+              Favorites:{data.getUser.favorites.map((el, i) => (
+                <li key={i}>{el}</li>
+              ))}
+            </ul>
           </div>
         );
       }}

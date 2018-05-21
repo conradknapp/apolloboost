@@ -10,17 +10,11 @@ const initialState = {
   name: "",
   instructions: "",
   category: "Breakfast",
-  description: "",
-  username: ""
+  description: ""
 };
 
 class CreateRecipe extends Component {
   state = { ...initialState };
-
-  componentDidMount() {
-    const { currentUser } = this.props;
-    this.setState({ username: currentUser });
-  }
 
   handleChange = evt => {
     const { name, value } = evt.target;
@@ -58,7 +52,8 @@ class CreateRecipe extends Component {
   };
 
   render() {
-    const { name, instructions, category, description, username } = this.state;
+    const { name, instructions, category, description } = this.state;
+    const { currentUser } = this.props;
 
     return (
       <Fragment>
@@ -70,7 +65,7 @@ class CreateRecipe extends Component {
             instructions,
             category,
             description,
-            username
+            username: currentUser
           }}
           update={this.updateCache}
         >

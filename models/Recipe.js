@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const uuid = require('uuid');
+const uuid = require("uuid");
 
 const RecipeSchema = new Schema({
   id: {
@@ -38,4 +38,4 @@ RecipeSchema.index({
   "$**": "text"
 });
 
-module.exports = mongoose.model('Recipe', RecipeSchema);
+module.exports = mongoose.model("Recipe", RecipeSchema);

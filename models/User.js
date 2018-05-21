@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 const UserSchema = new Schema({
   username: {
@@ -19,11 +19,15 @@ const UserSchema = new Schema({
   joinDate: {
     type: Date,
     default: Date.now
+  },
+  favorites: {
+    type: [String],
+    ref: "Recipe"
   }
 });
 
-UserSchema.pre('save', function(next) {
-  if (!this.isModified('password')) {
+UserSchema.pre("save", function(next) {
+  if (!this.isModified("password")) {
     return next();
   }
   bcrypt.genSalt(10, (err, salt) => {
@@ -33,8 +37,8 @@ UserSchema.pre('save', function(next) {
       if (err) return next(err);
       this.password = hash;
       next();
-    })
-  })
+    });
+  });
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", UserSchema);

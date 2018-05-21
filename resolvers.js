@@ -14,12 +14,6 @@ exports.resolvers = {
     getRecipe: async (root, { id }) => {
       return await Recipe.findOne({ id });
     },
-    getLatestRecipes: async root => {
-      const latestRecipes = await Recipe.find()
-        .sort({ createdDate: "desc" })
-        .limit(1);
-      return latestRecipes;
-    },
     getAllRecipes: async (root, { searchTerm }) => {
       if (searchTerm) {
         return Recipe.find({ $text: { $search: searchTerm } }).sort({
@@ -30,7 +24,9 @@ exports.resolvers = {
       }
     },
     getCreatedRecipes: async (root, { username }) => {
-      const createdRecipes = await Recipe.find({ username });
+      const createdRecipes = await Recipe.find({ username }).sort({
+        createdDate: "desc"
+      });
       return createdRecipes;
     },
     getUser: async (root, { username }) => {
@@ -52,10 +48,14 @@ exports.resolvers = {
       }).save();
       return newRecipe;
     },
-    likeRecipe: async (root, { id }) => {
+    likeRecipe: async (root, { id, username }) => {
       const recipe = await Recipe.findOneAndUpdate(
         { id },
         { $inc: { likes: 1 } }
+      );
+      const user = await User.update(
+        { username },
+        { $addToSet: { favorites: id } }
       );
       return recipe;
     },
