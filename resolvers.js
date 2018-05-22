@@ -53,26 +53,29 @@ exports.resolvers = {
       return newRecipe;
     },
     likeRecipe: async (root, { _id, username, liked, prevLiked }) => {
-      if ((liked === true && !prevLiked) || (!liked && prevLiked)) {
+      if ((liked && !prevLiked) || (!liked && prevLiked)) {
         var recipe = await Recipe.findOneAndUpdate(
           { _id },
           { $inc: { likes: 1 } }
         );
-        var user = await User.update(
+        var user = await User.findOneAndUpdate(
           { username },
-          { $addToSet: { favorites: _id } }
+          { $addToSet: { favorites: _id } },
+          { returnOriginal: false }
         );
       } else if ((!liked && !prevLiked) || (liked && prevLiked)) {
         var recipe = await Recipe.findOneAndUpdate(
           { _id },
           { $inc: { likes: -1 } }
         );
-        var user = await User.update(
+        var user = await User.findOneAndUpdate(
           { username },
-          { $pop: { favorites: _id } }
+          { $pop: { favorites: _id } },
+          { returnOriginal: false }
         );
       }
-      return recipe;
+      var [user, recipe] = await Promise.all([user, recipe]);
+      return { user, recipe };
     },
     signinUser: async (root, { username, password }) => {
       const user = await User.findOne({ username });

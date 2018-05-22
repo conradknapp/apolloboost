@@ -19,6 +19,11 @@ exports.typeDefs = `
     favorites: [Favorite]
   }
 
+  type RecipeAndUser {
+    user: User
+    recipe: Recipe
+  }
+
   type Favorite {
     _id: ID
     name: String
@@ -44,7 +49,7 @@ exports.typeDefs = `
 
   type Mutation {
     createRecipe(name: String, category: String, description: String, instructions: String, username: String): Recipe
-    likeRecipe(_id: ID!, username: String!, liked: Boolean!, prevLiked: Boolean!): Recipe
+    likeRecipe(_id: ID!, username: String!, liked: Boolean!, prevLiked: Boolean!): RecipeAndUser
 
     signinUser(username: String!, password: String!): Token!
     createUser(username: String!, password: String!, email: String!): Token!

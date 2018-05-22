@@ -10,7 +10,7 @@ const RecipePage = ({ match }) => {
       {({ loading, error, data }) => {
         if (loading) return <div className="App">Loading...</div>;
         if (error) return <div>Error :(</div>;
-        console.log(data);
+        // console.log(data);
         return (
           <div className="App">
             <h2>{data.getRecipe.name}</h2>

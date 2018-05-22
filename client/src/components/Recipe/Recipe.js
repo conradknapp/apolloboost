@@ -2,9 +2,10 @@ import React from "react";
 import { Query, Mutation } from "react-apollo";
 import { Link } from "react-router-dom";
 
-// add like -> liked === true && not previously liked (liked === true && prevLiked === false)
-// remove like -> liked === false && not previously liked (liked === false && prevLiked === false)
-// remove like -> liked === true && previously liked (liked === true && prevLiked === true)
+// add like -> liked === true && previously liked === false
+// add like -> liked === false && previously liked === true
+// remove like -> liked === false && previously liked === false
+// remove like -> liked === true && previously liked === true
 
 import { LIKE_RECIPE, GET_RECIPES, GET_USER } from "../../queries";
 import withSession from "../withSession";
@@ -25,21 +26,23 @@ class Recipe extends React.Component {
       prevState => ({
         liked: !prevState.liked
       }),
-      () => likeRecipe()
+      async () => await likeRecipe()
     );
   };
 
-  update = (cache, { data: { likeRecipe } }) => {
+  updateCache = (cache, { data: { likeRecipe } }) => {
     const { liked, prevLiked } = this.state;
     const { getAllRecipes } = cache.readQuery({ query: GET_RECIPES });
 
-    if ((liked === true && !prevLiked) || (!liked && prevLiked)) {
+    if ((liked && !prevLiked) || (!liked && prevLiked)) {
       getAllRecipes.map(
-        recipe => (recipe._id === likeRecipe._id ? (recipe.likes += 1) : recipe)
+        recipe =>
+          recipe._id === likeRecipe.recipe._id ? (recipe.likes += 1) : recipe
       );
     } else if ((!liked && !prevLiked) || (liked && prevLiked)) {
       getAllRecipes.map(
-        recipe => (recipe._id === likeRecipe._id ? (recipe.likes -= 1) : recipe)
+        recipe =>
+          recipe._id === likeRecipe.recipe._id ? (recipe.likes -= 1) : recipe
       );
     }
 
@@ -80,27 +83,32 @@ class Recipe extends React.Component {
           <Mutation
             mutation={LIKE_RECIPE}
             variables={{ _id, username, liked, prevLiked }}
-            update={this.update}
+            update={this.updateCache}
           >
-            {(likeRecipe, { data, loading, error }) => (
-              <Query query={GET_USER} variables={{ username: currentUser }}>
-                {({ loading, error, data }) => {
-                  if (loading) return <div className="App">Loading...</div>;
-                  if (error) return <div>Error :(</div>;
+            {(likeRecipe, { data, loading, error }) => {
+              // console.log(data);
+              return (
+                <Query query={GET_USER} variables={{ username: currentUser }}>
+                  {({ loading, error, data, refetch }) => {
+                    if (loading) return <div className="App">Loading...</div>;
+                    if (error) return <div>Error :(</div>;
 
-                  return (
-                    <RecipeButton
-                      data={data}
-                      likeRecipe={likeRecipe}
-                      _id={_id}
-                      prevLiked={prevLiked}
-                      onChildMount={this.onChildMount}
-                      handleClick={this.handleClick}
-                    />
-                  );
-                }}
-              </Query>
-            )}
+                    return (
+                      <RecipeButton
+                        data={data}
+                        likeRecipe={likeRecipe}
+                        _id={_id}
+                        liked={liked}
+                        prevLiked={prevLiked}
+                        onChildMount={this.onChildMount}
+                        handleClick={this.handleClick}
+                        refetch={refetch}
+                      />
+                    );
+                  }}
+                </Query>
+              );
+            }}
           </Mutation>
         )}
       </li>

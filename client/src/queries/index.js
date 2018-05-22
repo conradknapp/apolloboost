@@ -80,12 +80,26 @@ export const LIKE_RECIPE = gql`
       liked: $liked
       prevLiked: $prevLiked
     ) {
-      _id
-      likes
-      name
-      category
-      instructions
-      description
+      user {
+        _id
+        username
+        favorites {
+          _id
+          username
+        }
+        joinDate
+        email
+      }
+      recipe {
+        _id
+        name
+        category
+        likes
+        description
+        instructions
+        createdDate
+        username
+      }
     }
   }
 `;
