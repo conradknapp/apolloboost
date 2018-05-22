@@ -68,8 +68,18 @@ export const CREATE_RECIPE = gql`
 `;
 
 export const LIKE_RECIPE = gql`
-  mutation($_id: ID!, $username: String!) {
-    likeRecipe(_id: $_id, username: $username) {
+  mutation(
+    $_id: ID!
+    $username: String!
+    $liked: Boolean!
+    $prevLiked: Boolean!
+  ) {
+    likeRecipe(
+      _id: $_id
+      username: $username
+      liked: $liked
+      prevLiked: $prevLiked
+    ) {
       _id
       likes
       name

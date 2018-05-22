@@ -2,32 +2,52 @@ import React from "react";
 import { Query, Mutation } from "react-apollo";
 import { Link } from "react-router-dom";
 
+// add like -> liked === true && not previously liked (liked === true && prevLiked === false)
+// remove like -> liked === false && not previously liked (liked === false && prevLiked === false)
+// remove like -> liked === true && previously liked (liked === true && prevLiked === true)
+
 import { LIKE_RECIPE, GET_RECIPES, GET_USER } from "../../queries";
 import withSession from "../withSession";
+import RecipeButton from "./RecipeButton";
 
 class Recipe extends React.Component {
   state = {
-    clicked: false
+    liked: false,
+    prevLiked: null
   };
 
-  handleClick = (_id, likeRecipe, data) => {
-    if (!this.state.clicked || !data.getUser.favorites.includes(_id)) {
-      likeRecipe();
-    }
-    this.setState(prevState => ({
-      clicked: true
-    }));
+  onChildMount = prevLiked => {
+    this.setState({ prevLiked });
+  };
+
+  handleClick = likeRecipe => {
+    this.setState(
+      prevState => ({
+        liked: !prevState.liked
+      }),
+      () => likeRecipe()
+    );
   };
 
   update = (cache, { data: { likeRecipe } }) => {
+    const { liked, prevLiked } = this.state;
     const { getAllRecipes } = cache.readQuery({ query: GET_RECIPES });
-    getAllRecipes.map(
-      recipe => (recipe._id === likeRecipe._id ? (recipe.likes += 1) : recipe)
-    );
+
+    if ((liked === true && !prevLiked) || (!liked && prevLiked)) {
+      getAllRecipes.map(
+        recipe => (recipe._id === likeRecipe._id ? (recipe.likes += 1) : recipe)
+      );
+    } else if ((!liked && !prevLiked) || (liked && prevLiked)) {
+      getAllRecipes.map(
+        recipe => (recipe._id === likeRecipe._id ? (recipe.likes -= 1) : recipe)
+      );
+    }
 
     cache.writeQuery({
       query: GET_RECIPES,
-      data: { getAllRecipes }
+      data: {
+        getAllRecipes
+      }
     });
   };
 
@@ -43,7 +63,8 @@ class Recipe extends React.Component {
       isAuth,
       currentUser
     } = this.props;
-    const { clicked } = this.state;
+    const { liked, prevLiked } = this.state;
+    console.log(this.state);
 
     return (
       <li>
@@ -58,7 +79,7 @@ class Recipe extends React.Component {
         {isAuth && (
           <Mutation
             mutation={LIKE_RECIPE}
-            variables={{ _id, username }}
+            variables={{ _id, username, liked, prevLiked }}
             update={this.update}
           >
             {(likeRecipe, { data, loading, error }) => (
@@ -66,17 +87,16 @@ class Recipe extends React.Component {
                 {({ loading, error, data }) => {
                   if (loading) return <div className="App">Loading...</div>;
                   if (error) return <div>Error :(</div>;
+
                   return (
-                    <button
-                      disabled={data.getUser.favorites.includes(_id) || clicked}
-                      onClick={event =>
-                        this.handleClick(event, likeRecipe, data)
-                      }
-                    >
-                      {data.getUser.favorites.includes(_id) || clicked
-                        ? "Liked!"
-                        : "Like"}
-                    </button>
+                    <RecipeButton
+                      data={data}
+                      likeRecipe={likeRecipe}
+                      _id={_id}
+                      prevLiked={prevLiked}
+                      onChildMount={this.onChildMount}
+                      handleClick={this.handleClick}
+                    />
                   );
                 }}
               </Query>

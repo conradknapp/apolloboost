@@ -52,15 +52,26 @@ exports.resolvers = {
       }).save();
       return newRecipe;
     },
-    likeRecipe: async (root, { _id, username }) => {
-      const recipe = await Recipe.findOneAndUpdate(
-        { _id },
-        { $inc: { likes: 1 } }
-      );
-      const user = await User.update(
-        { username },
-        { $addToSet: { favorites: _id } }
-      );
+    likeRecipe: async (root, { _id, username, liked, prevLiked }) => {
+      if ((liked === true && !prevLiked) || (!liked && prevLiked)) {
+        var recipe = await Recipe.findOneAndUpdate(
+          { _id },
+          { $inc: { likes: 1 } }
+        );
+        var user = await User.update(
+          { username },
+          { $addToSet: { favorites: _id } }
+        );
+      } else if ((!liked && !prevLiked) || (liked && prevLiked)) {
+        var recipe = await Recipe.findOneAndUpdate(
+          { _id },
+          { $inc: { likes: -1 } }
+        );
+        var user = await User.update(
+          { username },
+          { $pop: { favorites: _id } }
+        );
+      }
       return recipe;
     },
     signinUser: async (root, { username, password }) => {

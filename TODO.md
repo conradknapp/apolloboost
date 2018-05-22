@@ -14,3 +14,4 @@ Todo
 
 * Show all recipes by default on search page (maybe)
 * Add ability to delete recipes (if they are by a given user)
+* Show recipe as liked if it is in that user's 'favorite's' array
