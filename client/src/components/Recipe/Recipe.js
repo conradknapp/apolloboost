@@ -21,7 +21,8 @@ class Recipe extends React.Component {
     this.setState({ prevLiked });
   };
 
-  handleClick = likeRecipe => {
+  handleClick = async (likeRecipe, refetch) => {
+    await refetch();
     this.setState(
       prevState => ({
         liked: !prevState.liked
@@ -67,7 +68,7 @@ class Recipe extends React.Component {
       currentUser
     } = this.props;
     const { liked, prevLiked } = this.state;
-    console.log(this.state);
+    // console.log(this.state);
 
     return (
       <li>

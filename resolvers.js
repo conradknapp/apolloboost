@@ -61,7 +61,10 @@ exports.resolvers = {
         var user = await User.findOneAndUpdate(
           { username },
           { $addToSet: { favorites: _id } },
-          { returnOriginal: false }
+          { returnOriginal: false },
+          (err, doc) => {
+            return doc;
+          }
         );
       } else if ((!liked && !prevLiked) || (liked && prevLiked)) {
         var recipe = await Recipe.findOneAndUpdate(
@@ -71,7 +74,10 @@ exports.resolvers = {
         var user = await User.findOneAndUpdate(
           { username },
           { $pop: { favorites: _id } },
-          { returnOriginal: false }
+          { returnOriginal: false },
+          (err, doc) => {
+            return doc;
+          }
         );
       }
       var [user, recipe] = await Promise.all([user, recipe]);

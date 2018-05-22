@@ -8,10 +8,10 @@ class RecipeButton extends React.Component {
   }
 
   render() {
-    const { prevLiked, likeRecipe, handleClick, liked } = this.props;
+    const { prevLiked, likeRecipe, handleClick, liked, refetch } = this.props;
 
     return (
-      <button onClick={() => handleClick(likeRecipe)}>
+      <button onClick={() => handleClick(likeRecipe, refetch)}>
         {prevLiked || liked ? "Liked!" : "Like"}
       </button>
     );
